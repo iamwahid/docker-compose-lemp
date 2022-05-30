@@ -1,1 +1,1 @@
-docker build . -t iamwahidn/php7-nginx:0.2
+docker build . -t iamwahidn/php7-nginx:1.0

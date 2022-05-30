@@ -73,14 +73,18 @@ RUN chown ${SSHUSER}:${SSHGROUP} /home/${SSHUSER}/.ssh/authorized_keys && chmod 
 # Start SSH service
 RUN service ssh start
 
-# install NPM
+# install NodeJs
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-# ENV NVM_DIR "$HOME/.nvm"
-# RUN [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-#     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-# RUN nvm install 14
+ENV NODE_VERSION 14.19.1
+ENV NVM_DIR "/root/.nvm"
+RUN [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" &&  nvm use v${NODE_VERSION}
+RUN [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 
-# add supervisord configuration
+RUN cp $NVM_DIR/versions/node/v${NODE_VERSION}/bin/node /usr/bin/
+RUN cp $NVM_DIR/versions/node/v${NODE_VERSION}/bin/npm /usr/bin/
+
+# add configurations
 COPY rootfs /
 
 # Cleanup
