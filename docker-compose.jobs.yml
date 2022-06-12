@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  nginx-job:
+    image: iamwahidn/${NGINX}:1.0
+    container_name: '${COMPOSE_PROJECT_NAME}-nginx-job'
+    volumes:
+      - ${DOCUMENT_ROOT-./www}:/var/www/html
+      - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${NGINX_SITES-./config/sites-enabled}:/etc/nginx/sites-enabled
+      - ./jobs/docker-entrypoint.sh:/usr/local/docker-entrypoint.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      APP_HOSTNAME: ${APP_HOSTNAME}
+      APP_ROOT: ${APP_ROOT}
+      APP_NAME: ${APP_NAME}
+    entrypoint: ["sh", "/usr/local/docker-entrypoint.sh"]

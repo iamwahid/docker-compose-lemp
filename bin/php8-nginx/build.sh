@@ -1,0 +1,1 @@
+docker build . -t iamwahidn/php8-nginx:1.0
