@@ -8,8 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Update
 RUN apt-get -y update --fix-missing && \
     apt-get upgrade -y && \
-    apt-get --no-install-recommends install -y apt-utils && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get --no-install-recommends install -y apt-utils
 
 
 # Install useful tools and install important libaries
@@ -19,7 +18,7 @@ RUN apt-get -y update && \
     apt-get -y --no-install-recommends install --fix-missing apt-utils build-essential git curl && \ 
     apt-get -y --no-install-recommends install --fix-missing libcurl4-openssl-dev zip openssl && \
     apt-get -y --no-install-recommends install nginx && \
-    apt-get -y --no-install-recommends install supervisor && \
+    apt-get -y --no-install-recommends install supervisor gettext-base && \
     rm -rf /var/lib/apt/lists/* && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -90,7 +89,9 @@ COPY rootfs /
 # Cleanup
 RUN rm -rf /usr/src/*
 
-# ports
-EXPOSE 80 22
+ENTRYPOINT ["sh", "/usr/local/docker-entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+# ports
+EXPOSE 80 22

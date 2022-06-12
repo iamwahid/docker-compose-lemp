@@ -18,6 +18,8 @@ services:
       - ${NGINX_SITES-./config/sites-enabled}:/etc/nginx/sites-enabled
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      APP_HOSTNAME: ${APP_HOSTNAME}
+      APP_ROOT: ${APP_ROOT}
   database:
     build:
       context: "./bin/${DATABASE}"
