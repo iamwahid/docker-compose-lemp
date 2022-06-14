@@ -38,7 +38,7 @@ RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install gettext
-RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-configure zip
 RUN docker-php-ext-install zip
 
 # Install Freetype 
